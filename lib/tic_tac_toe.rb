@@ -13,6 +13,7 @@ class Game
     turn_setup
   end
 
+  # setup functions
   def grid_setup
     @grid = Grid.new
   end
@@ -31,38 +32,18 @@ class Game
     turn
   end
 
-  def check_win(last_input)
-    possible_lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
-                      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                      [0, 4, 8], [2, 4, 6]]
+  # game functions
+  def turn
+    while @game
+      if @turn_counter >= 10
+        puts "It's a tie!"
+        @game = false
+      end
 
-    possible_lines.select! { |line| line.include?(last_input) }
-
-    # transform lines in their values
-    possible_lines = transform_lines(possible_lines)
-
-    # reject lines that have an empty value
-    possible_lines.reject! { |line| line.include?(' ') }
-    # check lines that have only one value when uniqed
-    possible_lines.each do |line|
-      game_over(line) if line.uniq.size == 1
-    end
-  end
-
-  def transform_lines(lines)
-    lines.map! { |line| line = [@grid.show_cell(line[0]), @grid.show_cell(line[1]), @grid.show_cell(line[2])] }
-    lines
-  end
-
-  def game_over(line)
-    @game = false
-    case line.uniq
-    when ['X']
-      puts "#{@p1.name} wins!"
-      @game = false
-    when ['O']
-      puts "#{@p2.name} wins!"
-      @game = false
+      puts "Turn number #{@turn_counter}"
+      turn_picker
+      chosen_cell = turn_play
+      check_win(chosen_cell - 1)
     end
   end
 
@@ -83,17 +64,38 @@ class Game
     chosen_cell
   end
 
-  def turn
-    while @game
-      if @turn_counter >= 10
-        puts "It's a tie!"
-        @game = false
-      end
+  # check game state functions
+  def check_win(last_input)
+    possible_lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+                      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                      [0, 4, 8], [2, 4, 6]]
 
-      puts "Turn number #{@turn_counter}"
-      turn_picker
-      chosen_cell = turn_play
-      check_win(chosen_cell - 1)
+    possible_lines.select! { |line| line.include?(last_input) }
+
+    possible_lines = transform_lines(possible_lines)
+
+    possible_lines.reject! { |line| line.include?(' ') }
+
+    possible_lines.each do |line|
+      game_over(line) if line.uniq.size == 1
+    end
+  end
+
+  def transform_lines(lines)
+    lines.map! { |line| line = [@grid.show_cell(line[0]), @grid.show_cell(line[1]), @grid.show_cell(line[2])] }
+    lines
+  end
+
+  # receives winning line, declares winner, closes game
+  def game_over(line)
+    @game = false
+    case line.uniq
+    when ['X']
+      puts "#{@p1.name} wins!"
+      @game = false
+    when ['O']
+      puts "#{@p2.name} wins!"
+      @game = false
     end
   end
 end
