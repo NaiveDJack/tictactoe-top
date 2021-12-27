@@ -1,56 +1,31 @@
 # frozen_string_literal: true
 
-# Tic tac toe grid behaviour
-
-class Grid
-  def initialize
-    @values = { empty: ' ', p1: 'X', p2: 'O' }
-    @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-  end
-
-  def show_grid
-    @grid = [["  #{@cells[0]}  |  #{@cells[1]}  |  #{@cells[2]}  "],
-             ['-----------------'],
-             ["  #{@cells[3]}  |  #{@cells[4]}  |  #{@cells[5]}  "],
-             ['-----------------'],
-             ["  #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}  "]]
-    @grid.each { |n| puts n }
-  end
-
-  def show_cell(pos)
-    @cells[pos]
-  end
-
-  def update_grid(pos, player)
-    if @cells[pos - 1] == ' ' && pos.positive? && pos < 10
-      @cells[pos - 1] = @values[player]
-      show_grid
-    else
-      puts 'Wrong input!'
-      false
-    end
-  end
-end
-
-# player class
-class Player
-  def initialize(name)
-    @name = name
-  end
-
-  attr_reader :name
-end
+require_relative './grid'
+require_relative './player'
 
 # main game logic
 class Game
   def initialize
     @game = true
+    puts 'Tic tac toe with a friend!'
+    grid_setup
+    player_setup
+    turn_setup
+  end
+
+  def grid_setup
     @grid = Grid.new
-    puts 'Tic tac toe with a friend!', "Insert Player 1's name:"
+  end
+
+  def player_setup
+    puts "Insert Player 1's name:"
     @p1 = Player.new(gets.chomp)
     puts "Insert player 2's name:"
     @p2 = Player.new(gets.chomp)
     puts "It's going to be #{@p1.name} VS #{@p2.name}!"
+  end
+
+  def turn_setup
     @turn_counter = 1
     @turn_player = :empty
     turn
