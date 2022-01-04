@@ -11,6 +11,7 @@ class Game
     grid_setup
     player_setup
     turn_setup
+    turn
   end
 
   # setup functions
@@ -29,7 +30,6 @@ class Game
   def turn_setup
     @turn_counter = 1
     @turn_player = :empty
-    turn
   end
 
   # game functions
