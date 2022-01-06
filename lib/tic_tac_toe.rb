@@ -21,9 +21,9 @@ class Game
 
   def player_setup
     puts "Insert Player 1's name:"
-    @p1 = Player.new(gets.chomp)
+    @p1 = Player.new
     puts "Insert player 2's name:"
-    @p2 = Player.new(gets.chomp)
+    @p2 = Player.new
     puts "It's going to be #{@p1.name} VS #{@p2.name}!"
   end
 

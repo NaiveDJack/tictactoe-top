@@ -2,8 +2,8 @@
 
 # player class
 class Player
-  def initialize(name)
-    @name = name
+  def initialize
+    @name = gets.chomp
   end
 
   attr_reader :name

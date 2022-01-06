@@ -14,7 +14,7 @@ describe Grid do
 end
 
 describe Player do
-  subject(:player) { described_class.new('player') }
+  subject(:player) { described_class.new }
 
   it 'sets up the players' do
     name = player.instance_variable_get(:@name)
@@ -41,7 +41,7 @@ describe Game do
 
     xit 'identifies a win state' do
       current_grid = instance_variable_get(:@grid)
-      winning_grid.instance_variable_set( :@cells, ['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
+      winning_grid.instance_variable_set(:@cells, ['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
       game.grid.instance_variable_set(winning_grid)
       expect(self).to receive(:game_over)
     end
