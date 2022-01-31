@@ -2,6 +2,9 @@
 
 # Tic tac toe grid behaviour
 class Grid
+  # reader for testing purposes
+  attr_reader :cells
+
   def initialize
     @values = { empty: ' ', p1: 'X', p2: 'O' }
     @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']

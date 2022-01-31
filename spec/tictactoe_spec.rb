@@ -31,7 +31,7 @@ describe Game do
     end
 
     xit 'stops the game at turn 10' do
-      game.turn_counter.instance_variable_set(10)
+      game.instance_variable_set(:@turn_counter, 10)
       expect(game.game).to be false
     end
   end
@@ -39,11 +39,14 @@ describe Game do
   describe '#check_win' do
     let(:winning_grid) { instance_double(Grid) }
 
+    before do
+      winning_grid.instance_variable_set(:@cells, ['X', 'X', 'X', 'O', 'O', ' ', ' ', ' ', ' '])
+      game.instance_variable_set(:@grid, winning_grid)
+    end
+
     xit 'identifies a win state' do
-      current_grid = instance_variable_get(:@grid)
-      winning_grid.instance_variable_set(:@cells, ['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
-      game.grid.instance_variable_set(winning_grid)
-      expect(self).to receive(:game_over)
+      game.check_win('X')
+      expect(game.game).to be false
     end
   end
 end

@@ -5,6 +5,8 @@ require_relative './player'
 
 # main game logic
 class Game
+  attr_reader :game, :grid
+
   def initialize
     @game = true
     puts 'Tic tac toe with a friend!'
