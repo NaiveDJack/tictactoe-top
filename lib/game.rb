@@ -10,13 +10,15 @@ class Game
   def initialize
     @game = true
     puts 'Tic tac toe with a friend!'
-    grid_setup
-    player_setup
-    turn_setup
-    turn
   end
 
   # setup functions
+  def setup
+    grid_setup
+    player_setup
+    turn_setup
+  end
+
   def grid_setup
     @grid = Grid.new
   end
@@ -35,17 +37,16 @@ class Game
   end
 
   # game functions
+  def start
+    turn
+  end
+
   def turn
     while @game
-      if @turn_counter >= 10
-        puts "It's a tie!"
-        @game = false
-      end
-
       puts "Turn number #{@turn_counter}"
       turn_picker
       chosen_cell = turn_play
-      check_win(chosen_cell - 1)
+      check_state(chosen_cell - 1)
     end
   end
 
@@ -67,39 +68,24 @@ class Game
   end
 
   # check game state functions
-  def check_win(last_input)
-    possible_lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
-                      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                      [0, 4, 8], [2, 4, 6]]
+  def check_state(last_input)
+    state, player = @grid.line?(last_input)
 
-    possible_lines.select! { |line| line.include?(last_input) }
-
-    possible_lines = transform_lines(possible_lines)
-
-    possible_lines.reject! { |line| line.include?(' ') }
-
-    possible_lines.each do |line|
-      game_over(line) if line.uniq.size == 1
-    end
+    game_over(player) if state == true
+    game_over('none') if @turn_counter >= 10
   end
 
-  def transform_lines(lines)
-    lines.map! { |line| line = [@grid.show_cell(line[0]), @grid.show_cell(line[1]), @grid.show_cell(line[2])] }
-    lines
-  end
-
-  # receives winning line, declares winner, closes game
-  def game_over(line)
-    @game = false
-    case line.uniq
+  # game over logic
+  def game_over(winner)
+    case winner
     when ['X']
       puts "#{@p1.name} wins!"
-      @game = false
     when ['O']
       puts "#{@p2.name} wins!"
-      @game = false
+    else
+      puts "It's a tie!"
     end
+
+    @game = false
   end
 end
-
-game = Game.new
