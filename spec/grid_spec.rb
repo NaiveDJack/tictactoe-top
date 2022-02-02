@@ -5,10 +5,15 @@ require_relative '../lib/grid'
 describe Grid do
   subject(:grid) { described_class.new }
 
-  it 'sets up the grid' do
-    values = grid.instance_variable_get(:@values)
-    cells = grid.instance_variable_get(:@cells)
-    expect(values).to eq({ empty: ' ', p1: 'X', p2: 'O' })
-    expect(cells).to eq([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
+  # would like to test different board situations
+
+  describe '#cell_available?'
+  describe '#valid_input?'
+
+  describe '#line?' do
+    it 'identifies a non-win state'
+    it 'identifies a win state'
+    # create a grid with a line
+    # expect(grid.line).to be_falsey?
   end
 end

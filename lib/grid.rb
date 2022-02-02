@@ -7,7 +7,7 @@ class Grid
     @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
 
-  # visualisation methods
+  # visualisation method
   def show_grid
     @grid = [["  #{@cells[0]}  |  #{@cells[1]}  |  #{@cells[2]}  "],
              ['—————————————————'],
@@ -15,10 +15,6 @@ class Grid
              ['—————————————————'],
              ["  #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}  "]]
     @grid.each { |n| puts n }
-  end
-
-  def show_cell(pos)
-    @cells[pos]
   end
 
   # grid alteration methods
@@ -52,7 +48,7 @@ class Grid
 
     possible_lines.select! { |line| line.include?(last_input) }
 
-    possible_lines = transform_lines(possible_lines)
+    possible_lines = extract_values(possible_lines)
 
     possible_lines.reject! { |line| line.include?(' ') }
 
@@ -61,8 +57,8 @@ class Grid
     end
   end
 
-  def transform_lines(lines)
-    lines.map! { |line| line = [show_cell(line[0]), show_cell(line[1]), show_cell(line[2])] }
+  def extract_values(lines)
+    lines.map! { |line| line = [@cells[line[0]], @cells[line[1]], @cells[line[2]]] }
     lines
   end
 end

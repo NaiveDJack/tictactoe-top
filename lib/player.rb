@@ -5,6 +5,4 @@ class Player
   def initialize
     @name = gets.chomp
   end
-
-  attr_reader :name
 end

@@ -5,36 +5,23 @@ require_relative '../lib/game'
 describe Game do
   subject(:game) { described_class.new }
 
-  describe '#turn' do
-    # a turn happens
-    # turn counter goes up
-    it 'plays one turn' do
-      expect(game).to receive(:turn_play)
-    end
+  describe '#turn_picker'
+  # odd turns make @turn_player = :p1
+  # even turns make @turn_player = :p2
 
-    # turn counter gets to 10
-    # turn counter does not go up
-    # game ends
-    it 'stops the game at turn 10' do
-      game.instance_variable_set(:@turn_counter, 10)
-      expect(game.game).to be false
-    end
-  end
+  describe '#turn_play'
+  # updates turn counter by 1
+  # it 'plays one turn' do
+  #   turn_counter = instance_variable_get(:@turn_counter)
+  #   expect(turn_counter).to change.by(1)
+  # end
 
-  describe '#check_win' do
-    let(:winning_grid) { instance_double(Grid) }
+  describe '#check_state'
+  # calls game_over with player if state == true
+  # calls game over with 'none' if @turn_counter >= 10
 
-    # mock grid becomes Game @grid
-    # check win on the mock grid
-    # game over is called
-    before do
-      winning_grid.instance_variable_set(:@cells, ['X', 'X', 'X', 'O', 'O', ' ', ' ', ' ', ' '])
-      game.instance_variable_set(:@grid, winning_grid)
-    end
-
-    it 'identifies a win state' do
-      game.check_win('X')
-      expect(game.game).to be false
-    end
+  describe '#game_over' do
+    game_state = game.instance_variable_get(:@game)
+    expect(game_state).to be false
   end
 end
