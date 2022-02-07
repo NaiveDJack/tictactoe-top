@@ -67,10 +67,10 @@ class Game
 
   # check game state functions
   def check_state(last_input)
-    state, player = @grid.line?(last_input)
+    end_state, player = @grid.line?(last_input)
 
-    game_over(player) if state == true
-    game_over('none') if @turn_counter >= 10 && state == false
+    game_over(player) if end_state == true
+    game_over('none') if @turn_counter >= 10 && end_state == false
   end
 
   # game over logic

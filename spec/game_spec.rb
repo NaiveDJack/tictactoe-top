@@ -6,33 +6,39 @@ describe Game do
   subject(:game) { described_class.new }
 
   describe '#turn_picker' do
-    before do
-      whose_turn = game.instance_variable_get(:@turn_player)
-    end
-
+    # tests need Player instance double
     it 'gives player 1 the turn if counter is odd' do
       game.turn_picker(1)
+      whose_turn = game.instance_variable_get(:@turn_player)
       expect(whose_turn).to eq(:p1)
     end
     # odd turns make @turn_player = :p1
     it 'gives player 2 the turn if counter is even' do
       game.turn_picker(2)
+      whose_turn = game.instance_variable_get(:@turn_player)
       expect(whose_turn).to eq(:p2)
     end
     # even turns make @turn_player = :p2
   end
 
   describe '#turn_play' do
+    # test needs Grid instance double
     it 'updates turn counter by 1' do
-      # turn_counter = game.instance_variable_get(:@turn_counter)
+      turn_counter = game.instance_variable_get(:@turn_counter)
+      game.turn_play(8)
+      expect(turn_counter).to change.by(1)
     end
-    # it 'plays one turn' do
-    #   turn_counter = instance_variable_get(:@turn_counter)
-    #   expect(turn_counter).to change.by(1)
-    # end
   end
 
-  describe '#check_state'
+  describe '#check_state' do
+    # test needs Grid instance double
+    it 'calls game over if there is an end state' do
+      game.check_state([true, 'X'])
+      expect(self).to receive(game_over)
+    end
+
+    it 'calls game over if turn counter is 10 or greater'
+  end
   # calls game_over with player if state == true
   # calls game over with 'none' if @turn_counter >= 10
 
