@@ -55,10 +55,12 @@ class Grid
     possible_lines.each do |line|
       return true, line.uniq if line.uniq.size == 1
     end
+
+    false
   end
 
   def extract_values(lines)
-    lines.map! { |line| line = [@cells[line[0]], @cells[line[1]], @cells[line[2]]] }
+    lines.map! { |line| [@cells[line[0]], @cells[line[1]], @cells[line[2]]] }
     lines
   end
 end

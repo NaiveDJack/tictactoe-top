@@ -44,14 +44,14 @@ class Game
   def turn
     while @game
       puts "Turn number #{@turn_counter}"
-      turn_picker
-      chosen_cell = turn_play
-      check_state(chosen_cell - 1)
+      turn_picker(@turn_counter)
+      puts 'Choose a cell [1 - 9]'
+      turn_play(gets.to_i)
     end
   end
 
-  def turn_picker
-    if @turn_counter.odd?
+  def turn_picker(turn_number)
+    if turn_number.odd?
       @turn_player = :p1
       puts "It's #{@p1.name}'s turn!"
     else
@@ -60,11 +60,9 @@ class Game
     end
   end
 
-  def turn_play
-    puts 'Choose a cell [1 - 9]'
-    chosen_cell = gets.to_i
+  def turn_play(chosen_cell)
     @turn_counter += 1 if @grid.update_grid(chosen_cell, @turn_player)
-    chosen_cell
+    check_state(chosen_cell - 1)
   end
 
   # check game state functions
@@ -72,7 +70,7 @@ class Game
     state, player = @grid.line?(last_input)
 
     game_over(player) if state == true
-    game_over('none') if @turn_counter >= 10
+    game_over('none') if @turn_counter >= 10 && state == false
   end
 
   # game over logic
