@@ -23,6 +23,12 @@ describe Game do
 
   describe '#turn_play' do
     # test needs Grid instance double
+    let(:game_grid) { instance_double(Grid) }
+
+    before do
+      allow(:game_grid).to receive(:update_grid).with(8, :p1).and_return(true)
+    end
+
     it 'updates turn counter by 1' do
       turn_counter = game.instance_variable_get(:@turn_counter)
       game.turn_play(8)
