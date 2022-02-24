@@ -5,34 +5,32 @@ require_relative './player'
 
 # main game logic
 class Game
-  attr_reader :game, :grid
+  attr_reader :game, :grid, :turn_counter
 
-  def initialize
+  def initialize(grid_obj = Grid.new, p1_obj = Player.new, p2_obj = Player.new)
     @game = true
     puts 'Tic tac toe with a friend!'
+    @grid = grid_obj
+    @p1 = p1_obj
+    @p2 = p2_obj
   end
 
   # setup functions
   def setup
-    grid_setup
     player_setup
     turn_setup
   end
 
-  def grid_setup
-    @grid = Grid.new
-  end
-
   def player_setup
     puts "Insert Player 1's name:"
-    @p1 = Player.new
+    @p1.name = gets.chomp
     puts "Insert player 2's name:"
-    @p2 = Player.new
+    @p2.name = gets.chomp
     puts "It's going to be #{@p1.name} VS #{@p2.name}!"
   end
 
-  def turn_setup
-    @turn_counter = 1
+  def turn_setup(starting_turn = 1)
+    @turn_counter = starting_turn
     @turn_player = :empty
   end
 

@@ -2,18 +2,18 @@
 
 # Tic tac toe grid behaviour
 class Grid
-  def initialize
+  def initialize(cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
     @values = { empty: ' ', p1: 'X', p2: 'O' }
-    @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-  end
-
-  # visualisation method
-  def show_grid
+    @cells = cells
     @grid = [["  #{@cells[0]}  |  #{@cells[1]}  |  #{@cells[2]}  "],
              ['—————————————————'],
              ["  #{@cells[3]}  |  #{@cells[4]}  |  #{@cells[5]}  "],
              ['—————————————————'],
              ["  #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}  "]]
+  end
+
+  # visualisation method
+  def show_grid
     @grid.each { |n| puts n }
   end
 
@@ -22,6 +22,11 @@ class Grid
     return unless valid_input?(pos) && cell_available?(pos)
 
     @cells[pos - 1] = @values[player]
+    @grid = [["  #{@cells[0]}  |  #{@cells[1]}  |  #{@cells[2]}  "],
+             ['—————————————————'],
+             ["  #{@cells[3]}  |  #{@cells[4]}  |  #{@cells[5]}  "],
+             ['—————————————————'],
+             ["  #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}  "]]
     show_grid
   end
 
